@@ -15,7 +15,7 @@
 'use client';
 import ApparelList from './ApparelList';
 
-export default function ApparelPage() {
+export default function ApparelPage(req, res) {
   return (
     <div>
       <ApparelList />
