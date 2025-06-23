@@ -1,0 +1,23 @@
+// 'use client';
+
+// import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+
+// export default function MasterLayoutPage() {
+//   return <MasterLayoutUI />;
+// }
+
+
+'use client';
+
+import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import ProtectedRoute from '@/components/roleGuard/protectedRoute';
+
+export default function DashboardLayout({ children }) {
+  return (
+  <ProtectedRoute>
+    <MasterLayoutUI>
+    {children}
+    </MasterLayoutUI>
+  </ProtectedRoute>
+  );
+}

@@ -40,3 +40,26 @@ a {
     color-scheme: dark;
   }
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px; 
+  width: 25%;
+  height: 25%;
+  overflow-y: auto;
+  color: black;
+}
+
+.modal-content h2{
+  margin-bottom: 1rem;
+}
