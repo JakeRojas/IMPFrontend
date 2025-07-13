@@ -1,7 +1,9 @@
-import { withRole } from '@/components/withRole';
+// 'use client';
 
-function UserManagementPage() {
-  return <div>User Management (Admins only)</div>;
-}
+// import { withRole } from '@/components/withRole';
 
-export default withRole(UserManagementPage, ['admin', 'superAdmin']);
+// function UserManagementPage() {
+//   return <div>User Management (Admins only)</div>;
+// }
+
+// export default withRole(UserManagementPage, ['admin', 'superAdmin']);

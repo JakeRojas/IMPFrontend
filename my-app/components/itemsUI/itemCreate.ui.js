@@ -1,13 +1,14 @@
+//main
 'use client';
 
 import { useState } from 'react';
 import { createItemFetcher } from '@/services/itemService';
 
 const CATEGORY_OPTIONS = [
-  { value: 'it',      label: 'IT' },
-  { value: 'apparel', label: 'Apparel' },
-  { value: 'academic', label: 'Academic' },
-  { value: 'unknown',  label: 'Unknown' },
+  { value: 'it',      label: 'it' },
+  { value: 'apparel', label: 'apparel' },
+  { value: 'academic', label: 'academic' },
+  { value: 'unknown',  label: 'unknown' },
 ];
 
 export default function ItemCreateForm() {
@@ -34,7 +35,7 @@ export default function ItemCreateForm() {
     setError('');
 
     try {
-      const newItem = await createItemFetcher(
+      const newItem = await createItemFetcher( 
         { name, category },
         qrFile
       );
@@ -58,6 +59,7 @@ export default function ItemCreateForm() {
         <input
           type="text"
           value={name}
+          maxLength={10}
           onChange={e => setName(e.target.value)}
           required
         />

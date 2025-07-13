@@ -32,7 +32,7 @@ export default function ItemListUI({ items = [] }) {
   return (
     <>
       <div style={{ marginBottom: '1rem' }}>
-        <Link href="/items/new">
+        <Link href="/items">
           <button
             style={{
               padding: '0.5rem 1rem',
@@ -50,7 +50,7 @@ export default function ItemListUI({ items = [] }) {
       <ul>
         {items.map(i => (
           <li key={i.id}>
-            <strong>{i.itemName}</strong>
+            <strong>{i.itemName} {i.itemCategory}</strong>
             <button onClick={() => openModal(i.id)}>Register</button>
           </li>
         ))}

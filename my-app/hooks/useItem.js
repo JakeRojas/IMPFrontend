@@ -1,21 +1,27 @@
 'use client';
 
 import { API_URL, endpoints } from '@/config/apiConfig';
-import { useState } from'react';
+import { useState, useEffect, useRef } from'react';
 import useSWR from'swr';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAccount';
+import { BrowserMultiFormatReader } from '@zxing/browser';
 import {
   createItemFetcher, 
   getItemsFetcher, 
   getItemByIdFetcher, 
-  assignItemToRoomFetcher
+  assignItemToRoomFetcher,
+  scanItemFetcher,
+  updateItemStatusFetcher,
+  updateTransactionFetcher
 } from'@/services/itemService';
 
 module.exports = {
     useGetItems,
     useCreateItem,
     useGetItemById,
-    useAssignItem
+    useAssignItem,
+    useScanner
 };
 
 function useGetItems() {
@@ -26,6 +32,7 @@ function useGetItemById(id) {
   const { data, error } = useSWR( id ? `/${id}` : null, () => getItemByIdFetcher(id) );
   return { room: data, error };
 }
+//main
 function useCreateItem() {
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState(null);
@@ -59,4 +66,77 @@ function useAssignItem() {
   };
 
   return { assignItem: handleAssign, error };
+}
+function useScanner() {
+  const videoRef = useRef(null);
+  const codeReader = useRef(null);
+
+  const [ready, setReady]         = useState(false);
+  const [scannedCode, setScannedCode] = useState('');
+  const [status, setStatus]       = useState('');
+  const [updating, setUpdating]   = useState(false);
+  const [error, setError]         = useState('');
+  
+  useEffect(() => {
+    codeReader.current = new BrowserMultiFormatReader();
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: 'environment' } })
+      .then(stream => {
+        videoRef.current.srcObject = stream;
+        setReady(true);
+        codeReader.current.decodeFromVideoDevice(
+          null,
+          videoRef.current,
+          (result, err) => {
+            if (result) {
+              const text = result.getText();
+              setScannedCode(text);
+              handleScan(text);
+              codeReader.current.reset();
+              stream.getTracks().forEach(t => t.stop());
+            }
+          }
+        );
+      })
+      .catch(err => setError(err.message));
+
+    return () => {
+      if (videoRef.current?.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(t => t.stop());
+      }
+    };
+  }, []);
+
+  const handleScan = async qrText => {
+    setError('');
+    try {
+      const { item } = await scanItemFetcher(qrText, localStorage.getItem('token'));
+      setStatus(item.itemStatus);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  const markStatus = async newStatus => {
+    if (!scannedCode) return;
+    setUpdating(true);
+    try {
+      await updateItemStatusFetcher(item.id, newStatus, localStorage.getItem('token'));
+      setStatus(newStatus);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  return {
+    videoRef,
+    ready,
+    scannedCode,
+    status,
+    updating,
+    markStatus,
+    error
+  };
 }

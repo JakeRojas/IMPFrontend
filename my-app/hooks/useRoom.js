@@ -20,7 +20,6 @@ module.exports = {
     useGetUserOptions,
     useGetRoomItems,
     useUpdateItemStatus,
-    useScanner,
 };
 
 function useGetRooms() {
@@ -86,64 +85,6 @@ function useGetRoomItems(roomId) {
   }, [roomId]);
 
   return { items, error };
-}
-function useScanner(roomId) {
-  const videoRef   = useRef(null);
-  const scannerRef = useRef(null);
-  const camerasRef = useRef([]);
-  const [ready, setReady]           = useState(false);
-  const [scannedCode, setScannedCode] = useState(null);
-  const [status, setStatus]         = useState(null);
-  const [updating, setUpdating]     = useState(false);
-
-  useEffect(() => {
-    const loadInstascan = () => new Promise((resolve, reject) => {
-      if (window.Instascan) return resolve(window.Instascan);
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/gh/schmich/instascan-builds@master/instascan.min.js';
-      script.onload  = () => window.Instascan ? resolve(window.Instascan) : reject(new Error('Instascan not available'));
-      script.onerror = () => reject(new Error(`Failed to load ${script.src}`));
-      document.head.appendChild(script);
-    });
-
-    loadInstascan()
-      .then(Instascan => {
-        const { Scanner, Camera } = Instascan;
-        scannerRef.current = new Scanner({ video: videoRef.current });
-        scannerRef.current.addListener('scan', content => setScannedCode(content));
-        return Camera.getCameras();
-      })
-      .then(cams => {
-        camerasRef.current = cams;
-        setReady(cams.length > 0);
-      })
-      .catch(err => console.error('Instascan init error:', err));
-  }, []);
-
-  const start = () => {
-    const sc = scannerRef.current;
-    const cams = camerasRef.current;
-    if (sc && cams.length) {
-      try { sc.start(cams[0]); }
-      catch (e) { if (e.name !== 'FsmError') console.error(e); }
-    }
-  };
-
-  const markStatus = async (newStatus) => {
-    if (!scannedCode) return alert('No QR code scanned yet!');
-    setUpdating(true);
-    try {
-      await updateItemStatusFetcher(roomId, scannedCode, newStatus);
-      setStatus(newStatus);
-    } catch (e) {
-      console.error('Error updating status:', e);
-      alert(`Error updating status: ${e.message}`);
-    } finally {
-      setUpdating(false);
-    }
-  };
-
-  return { videoRef, ready, start, scannedCode, status, updating, markStatus };
 }
 function useUpdateItemStatus(roomId) {
   const [error, setError] = useState(null);

@@ -24,10 +24,12 @@ export const endpoints = {
   getItemsRoute: '/items/',
   getItemByIdRoute: '/items/:id',
   assignItemRoute: '/items/assign-item',
+  scanItemRoute: '/items/scan'
 };
 
 export const headers = {
   json: {
     'Content-Type': 'application/json',
   },
+  //auth: (token) => ({ Authorization: `Bearer ${token}` })
 };

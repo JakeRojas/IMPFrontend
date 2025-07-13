@@ -5,7 +5,6 @@ module.exports = {
     getRoomsFetcher,
     getRoomByIdFetcher,
     getRoomItemsFetcher,
-    updateItemStatusFetcher
 }
 
 async function createRoomFetcher(body) {
@@ -58,17 +57,5 @@ async function getRoomItemsFetcher(roomId) {
     headers: { ...headers.json, Accept: 'application/json' },
   });
   if (!res.ok) throw new Error('Cannot load registered items');
-  return res.json();
-}
-async function updateItemStatusFetcher(roomId, itemQrCode, newStatus) {
-  const path = endpoints.updateItemStatusRoute
-    .replace(':roomId', roomId)
-    .replace(':itemQrCode', encodeURIComponent(itemQrCode));
-  const res = await fetch(`${API_URL}/${path}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ newStatus }),
-  });
-  if (!res.ok) throw new Error(await res.text());
   return res.json();
 }

@@ -39,6 +39,9 @@ export default function MasterLayoutUI({ children }) {
             <li style={{ marginBottom: '0.75rem' }}>
               <Link href="/users">Users</Link>
             </li>
+            <li style={{ marginBottom: '0.75rem' }}>
+              <Link href="/items/scanner">Scan</Link>
+            </li>
             <li>
               <button
                 onClick={() => {

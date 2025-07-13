@@ -6,9 +6,11 @@
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export:all": "npx folder2txt --include-all --output allFilesFrontend.txt C:/Users/Administrator/Desktop/Inventory Monitoring/IMPFrontend/my-app/app C:/Users/Administrator/Desktop/Inventory Monitoring/IMPFrontend/my-app/components"
   },
   "dependencies": {
+    "@zxing/browser": "^0.1.5",
     "axios": "^1.8.4",
     "instascan": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -22,6 +24,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "eslint": "^9",
-    "eslint-config-next": "15.2.3"
+    "eslint-config-next": "15.2.3",
+    "folder2txt": "^1.0.2"
   }
 }

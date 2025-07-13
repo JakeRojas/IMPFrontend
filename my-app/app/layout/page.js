@@ -10,14 +10,8 @@
 'use client';
 
 import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
-import ProtectedRoute from '@/components/roleGuard/protectedRoute';
+//import ProtectedRoute from '@/components/roleGuard/protectedRoute';
 
 export default function DashboardLayout({ children }) {
-  return (
-  <ProtectedRoute>
-    <MasterLayoutUI>
-    {children}
-    </MasterLayoutUI>
-  </ProtectedRoute>
-  );
+  return  <MasterLayoutUI> {children} </MasterLayoutUI>;
 }

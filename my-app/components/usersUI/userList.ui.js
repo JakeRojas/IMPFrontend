@@ -15,9 +15,9 @@ export default function UserList({ users, onReload, loading }) {
         {users.map(u => (
           <li key={u.id} className="flex justify-between items-center mb-2">
             <span>{u.firstName} {u.lastName}</span>
-            <Link href={`/users/${u.id}`}>
+            {/* <Link href={`/users/${u.id}`}>
               <button className="px-2 py-1 rounded shadow bg-gray-200">Details</button>
-            </Link>
+            </Link> */}
           </li>
         ))}
       </ul>

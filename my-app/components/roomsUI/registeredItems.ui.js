@@ -30,7 +30,6 @@ export default function RegisteredItemsUI({ roomId }) {
     <div className="max-w-3xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold">Registered Items (Room {roomId})</h1>
-        {/* Scan button routes to /rooms/[roomId]/scan */}
         <Link href={`/rooms/${roomId}/scanner`}>
           <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             Scan Items
@@ -48,14 +47,6 @@ export default function RegisteredItemsUI({ roomId }) {
               <th className="border px-4 py-2 text-left">QR Code</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                <td className="border px-4 py-2">{item.itemName}</td>
-                <td className="border px-4 py-2">{item.itemQrCode}</td>
-              </tr>
-            ))}
-          </tbody> */}
           <tbody>
   {items.map((item, idx) => (
     <tr key={idx} className="hover:bg-gray-50">
