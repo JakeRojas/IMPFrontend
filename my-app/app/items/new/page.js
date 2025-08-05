@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import { useCreateItem } from '@/hooks/useItem';
-import ItemCreateForm from '@/components/itemsUI/ItemCreate.ui';
+import ItemCreateForm from '@/app/items/new/new.layout';
 
 export default function NewItemPage() {
 const { formData, setFormData, errorMsg, success, handleSubmit } = useCreateItem();

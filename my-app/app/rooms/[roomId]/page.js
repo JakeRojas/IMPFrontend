@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import { useRoomDetails } from '@/hooks/useRoom';
-import RoomDetailsUI from '@/components/roomsUI/roomDetails.ui';
+import RoomDetailsUI from '@/app/rooms/[roomId]/roomDetails.layout';
 
 export default function UserDetailPage() {
     const params = useParams();
@@ -14,6 +14,7 @@ export default function UserDetailPage() {
     return (
         <MasterLayoutUI> 
             <>
+                <h1>Rooms</h1>
                 {error && <p>Error loading user.</p>}
                 <RoomDetailsUI rooms={rooms} />
             </>

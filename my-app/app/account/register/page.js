@@ -1,6 +1,6 @@
 'use client';
 
-import RegisterUI from '@/components/accountsUI/registerUser.ui';
+import RegisterUI from '@/app/account/register/register.layout';
 import { useRegister } from '@/hooks/useAccount';
 
 export default function RegisterPage() {

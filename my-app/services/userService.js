@@ -6,8 +6,16 @@ module.exports = {
   createUserFetcher
 }
 
-async function getUsersFetcher() {
-  const res = await fetch(`${API_URL}${endpoints.getUsersRoute}`);
+// async function getUsersFetcher() {
+//   const res = await fetch(`${API_URL}${endpoints.getUsersRoute}`);
+//   if (!res.ok) throw new Error('Failed to load users');
+//   return res.json();
+// }
+async function getUsersFetcher(path) {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: 'GET',
+    headers: { ...headers.json, Accept: 'application/json' },
+  });
   if (!res.ok) throw new Error('Failed to load users');
   return res.json();
 }

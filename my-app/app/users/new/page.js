@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import { useCreateUser } from '@/hooks/useUser';
-import UserForm from '@/components/usersUI/userCreate.ui';
+import UserForm from '@/app/users/new/userCreate.layout';
  
 export default function NewUserPage() {
   const { createUser, error } = useCreateUser();

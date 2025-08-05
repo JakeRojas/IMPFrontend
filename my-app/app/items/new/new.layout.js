@@ -12,38 +12,33 @@ const CATEGORY_OPTIONS = [
 ];
 
 export default function ItemCreateForm() {
-  const [name, setName]             = useState('');
-  const [category, setCategory]     = useState('');
-  const [qrFile, setQrFile]         = useState(null);
+  const [data, setData]             = useState('');
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState('');
 
-  const handleFileChange = e => {
-    const file = e.target.files?.[0] ?? null;
-    setQrFile(file);
-  };
+  // const handleFileChange = e => {
+  //   const file = e.target.files?.[0] ?? null;
+  //   setQrFile(file);
+  // };
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!qrFile) {
-      setError('Please select a QR code image.');
-      return;
-    }
+    // if (!qrFile) {
+    //   setError('Please select a QR code image.');
+    //   return;
+    // }
 
     setLoading(true);
     setError('');
 
     try {
       const newItem = await createItemFetcher( 
-        { name, category },
-        qrFile
+        data
       );
       console.log('Created item:', newItem);
 
-      setName('');
-      setCategory('');
-      setQrFile(null);
+      setData('');
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -58,9 +53,9 @@ export default function ItemCreateForm() {
         <label>Name</label>
         <input
           type="text"
-          value={name}
+          value={data}
           maxLength={10}
-          onChange={e => setName(e.target.value)}
+          onChange={e => setData(e.target.value)}
           required
         />
       </div>
@@ -68,8 +63,8 @@ export default function ItemCreateForm() {
       <div>
         <label>Category</label>
         <select
-          value={category}
-          onChange={e => setCategory(e.target.value)}
+          value={data}
+          onChange={e => setData(e.target.value)}
           required
         >
           <option value="" disabled>
@@ -83,7 +78,7 @@ export default function ItemCreateForm() {
         </select>
       </div>
 
-      <div>
+      {/* <div>
         <label>QR Code Image</label>
         <input
           type="file"
@@ -92,7 +87,7 @@ export default function ItemCreateForm() {
           onChange={handleFileChange}
           required
         />
-      </div>
+      </div> */}
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 

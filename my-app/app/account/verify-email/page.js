@@ -1,7 +1,7 @@
 'use client';
 
-import { useVerifyEmail } from '@/hooks/useVerifyEmail';
-import VerifyEmailUI from '@/components/accountsUI/verifyEmail.ui';
+import { useVerifyEmail } from '@/hooks/useAccount';
+import VerifyEmailUI from '@/app/account/verify-email/verifyEmail.layout';
 
 export default function VerifyEmailPage() {
   const { loading, message, retry } = useVerifyEmail();

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
-import DashboardUI from '@/components/layoutsUI/dashboard.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
+import DashboardUI from '@/app/dashboard/dashboard.layout';
 
 export default function DashboardPage() {
   return (

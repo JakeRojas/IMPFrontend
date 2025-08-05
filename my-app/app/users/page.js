@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import { useGetUsers } from '@/hooks/useUser';
-import UserList from '@/components/usersUI/userList.ui';
+import UserList from '@/app/users/userList.layout';
 
 export default function UsersPage() {
   const { users, error, reload } = useGetUsers();

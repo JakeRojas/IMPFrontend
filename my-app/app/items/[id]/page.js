@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
-import ItemDetails from '@/components/itemsUI/ItemDetails.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
+import ItemDetails from '@/app/items/[id]/itemDetails.layout';
 
 export default function DetailPage({ params }) {
   return (

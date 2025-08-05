@@ -1,8 +1,8 @@
 'use client';
 
 import { use } from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
-import RegisteredItemsUI from '@/components/roomsUI/registeredItems.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
+import RegisteredItemsUI from '@/app/rooms/[roomId]/registered-items/registeredItems.layout';
 
 export default function RegisteredItemsPage({ params }) {
   const { roomId } = use(params);

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import DashboardUI from '@/components/layoutsUI/dashboard.ui';
+import DashboardUI from '@/app/dashboard/dashboard.layout';
 
 export default function MasterLayoutUI({ children }) {
   const router = useRouter();
@@ -19,12 +19,18 @@ export default function MasterLayoutUI({ children }) {
       {/* Sidebar */}
       <aside
         style={{
-          width: 240,
+          width: 200,
           borderRight: '1px solid #e0e0e0',
           padding: '1rem',
           boxSizing: 'border-box',
         }}
       >
+        <div style={{
+            height: '15vh'
+          }}>
+          w
+        </div>
+        <div>
         <nav>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
           <li style={{ marginBottom: '0.75rem' }}>
@@ -42,11 +48,14 @@ export default function MasterLayoutUI({ children }) {
             <li style={{ marginBottom: '0.75rem' }}>
               <Link href="/items/scanner">Scan</Link>
             </li>
+            <li style={{ marginBottom: '0.75rem' }}>
+              <Link href="/items">Inventory</Link>
+            </li>
             <li>
               <button
                 onClick={() => {
                   localStorage.removeItem('token');
-                  router.push('/login');
+                  router.push('/account/login');
                 }}
                 style={{
                   background: 'none',
@@ -61,6 +70,7 @@ export default function MasterLayoutUI({ children }) {
             </li>
           </ul>
         </nav>
+        </div>
       </aside>
 
       {/* Main content */}

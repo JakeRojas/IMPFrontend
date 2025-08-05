@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { loginFetcher, registerFetcher }  from '@/services/accountService';
+import { authenticateFetcher, registerFetcher }  from '@/services/accountService';
 import {jwtDecode} from 'jwt-decode';
 
 export function useAuth(/* { children } */) {
@@ -35,7 +35,7 @@ export function useAuth(/* { children } */) {
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    router.push('/login');
+    router.push('/account/login');
   };
 
   return { user, ready, login, logout };
@@ -54,7 +54,7 @@ export function useLogin() {
 
     try {
       // 1) Send credentials, get back raw JWT
-      const jwtToken = await loginFetcher({
+      const jwtToken = await authenticateFetcher({
         email: formData.email,
         password: formData.password,
       });

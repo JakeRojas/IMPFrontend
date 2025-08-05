@@ -1,7 +1,7 @@
 'use client';
 import { use } from 'react';
 import { useScanner } from '@/hooks/useItem';
-import { Scanner } from '@/components/itemsUI/itemScanner.ui';
+import { Scanner } from '@/app/items/scanner/scanner.layout';
 
 export default function Page({params}) {
   const { itemQrCode } = use(params);

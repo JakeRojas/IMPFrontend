@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { createUserFetcher } from '@/services/userService';
 
-export default function UserForm({ onSubmit, error }) {
+export default function UserForm({ error }) {
   const [data, setData] = useState({
     role: '',
     title: '',
@@ -15,10 +16,10 @@ export default function UserForm({ onSubmit, error }) {
   });
 
   const onChange = e => setData({ ...data, [e.target.name]: e.target.value });
-  const handleSubmit = e => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onSubmit(data);
-  };
+    await createUserFetcher(data);
+  }
 
   return (
     <div className="p-4">

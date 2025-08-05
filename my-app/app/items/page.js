@@ -23,17 +23,18 @@
 
 'use client';
 
-import React from 'react';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import { useState, useEffect } from 'react';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import useSWR from 'swr';
 import { getItemsFetcher } from '@/services/itemService';
-import ItemListUI from '@/components/itemsUI/ItemList.ui';
+import ItemListUI from '@/app/items/page.layout';
 import { useGetItems } from '@/hooks/useItem';
 
 export default function ItemsPage() {
   const { items, error } = useGetItems();
 
   if (error) return <p>Error loading items.</p>;
+
   return (
     <MasterLayoutUI>
       <h1>Items</h1>

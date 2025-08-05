@@ -31,5 +31,5 @@ function useCreateUser() {
     }
   };
 
-  return { createUserFetcher: handleCreate, error };
+  return { createUserFetcher: handleCreate, error, handleCreate };
 }

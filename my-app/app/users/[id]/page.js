@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import MasterLayoutUI from '@/components/layoutsUI/masterLayout.ui';
+import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 import { useGetUser } from '@/hooks/useUser';
-import UserDetail from '@/components/usersUI/userDetails.ui';
+import UserDetail from '@/app/users/[id]/userDetails.layout';
 
 export default function UserDetailPage() {
     const params = useParams();

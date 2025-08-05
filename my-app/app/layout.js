@@ -1,6 +1,7 @@
+//s'use client';
+
 import './globals.css';
 import Script from 'next/script';
-//import ProtectedRoute from '@/components/roleGuard/protectedRoute';
 
 export const metadata = {
   title: 'My App',

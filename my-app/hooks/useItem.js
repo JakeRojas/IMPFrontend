@@ -1,11 +1,12 @@
 'use client';
 
 import { API_URL, endpoints } from '@/config/apiConfig';
-import { useState, useEffect, useRef } from'react';
+import { useState, useEffect, useRef, useCallback } from'react';
 import useSWR from'swr';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAccount';
 import { BrowserMultiFormatReader } from '@zxing/browser';
+//import { downloadQRCodeFetcher } from '@/services/itemService';
 import {
   createItemFetcher, 
   getItemsFetcher, 
@@ -13,15 +14,19 @@ import {
   assignItemToRoomFetcher,
   scanItemFetcher,
   updateItemStatusFetcher,
+  downloadQRCodeFetcher,
+  getFilteredItemsFetcher,
   updateTransactionFetcher
 } from'@/services/itemService';
 
 module.exports = {
     useGetItems,
+    useFilteredItems,
     useCreateItem,
     useGetItemById,
     useAssignItem,
-    useScanner
+    useScanner,
+    useDownloadQRCode
 };
 
 function useGetItems() {
@@ -38,10 +43,10 @@ function useCreateItem() {
   const [error, setError]     = useState(null);
   const router = useRouter();
   
-  const submit = async ({ name, category, file }) => {
+  const submit = async (data) => {
     setLoading(true);
     try {
-      const newItem = await createItemFetcher({ name, category }, file);
+      const newItem = await createItemFetcher(data);
       router.push(`/items`);
     } catch (e) {
       setError(e.message);
@@ -139,4 +144,53 @@ function useScanner() {
     markStatus,
     error
   };
+}
+function useDownloadQRCode() {
+  const [loading, setLoading] = useState(false);
+  const [error,   setError]   = useState(null);
+
+  const download = useCallback(
+    async (itemId) => {
+      setLoading(true);
+      setError(null);
+      try {
+        await downloadQRCodeFetcher(itemId);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
+  return { download, loading, error };
+}
+function useFilteredItems(filters) {
+  const [items,   setItems]   = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error,   setError]   = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchItems = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = (filters
+          ? await getFilteredItemsFetcher(filters)
+          : await getItemsFetcher()
+        );
+        if (!cancelled) setItems(data);
+      } catch (err) {
+        if (!cancelled) setError(err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    fetchItems();
+    return () => { cancelled = true; };
+  }, [filters.category, filters.status, filters.activated, filters.transaction]);
+
+  return { items, loading, error };
 }
