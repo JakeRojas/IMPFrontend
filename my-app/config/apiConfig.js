@@ -24,6 +24,7 @@ export const endpoints = {
   getRoomByIdRoute:         '/rooms/:id',
   getInChargeOptionsRoute:  '/rooms/in-charge-options',
   getRegisteredItemsRoute:  '/rooms/:roomId/items',
+  getReceivedItemsRoute:    '/rooms/:roomId/received-items',
   
   updateItemStatusRoute:    '/rooms/:roomId/scan/items/:itemQrCode/status',
 
@@ -38,9 +39,12 @@ export const endpoints = {
   getItemQRCodeRoute:     '/items/:id/qrcode',
 
   //Apparel routs from backend
-  receiveApparelRoute:      '/apparels/receive',
+  receiveApparelRoute:       '/apparels/receive',
 
-  getReceiveApparelRoute:   '/apparels/',
+  getReceivedApparelRoute:   '/apparels/',
+
+  //Admin Supply routs from backend
+  getReceivedSuppliesRoute:   '/supplies/received ',
 };
 
 export const headers = {

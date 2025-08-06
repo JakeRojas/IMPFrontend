@@ -11,7 +11,8 @@ import {
   getRoomItemsFetcher,
   getRoomByIdFetcher,
   receiveInStockroomFetcher,
-  roomEnumOptionsFetcher
+  roomEnumOptionsFetcher,
+  getReceivedItemsFetcher
   } from '@/services/roomService';
 import { getUsersFetcher } from '@/services/userService'
 
@@ -23,7 +24,8 @@ module.exports = {
     useGetRoomItems,
     useUpdateItemStatus,
     useFilteredRooms,
-    useReceiveStockroom
+    useReceiveStockroom,
+    useReceivedItems
 };
 
 function useGetRooms() {
@@ -45,48 +47,7 @@ function useGetUserOptions() {
     error,
   };
 }
-// function useCreateRoom() {
-//   const router = useRouter();
-//   const [payload, setFormData] = useState({
-//     roomName: '',
-//     roomFloor: '',
-//     roomType: '',
-//     stockroomType: '',
-//     roomInCharge: ''
-//   });
-//   const [errorMsg, setErrorMsg] = useState('');
-//   const [success, setSuccess] = useState(false);
-
-//   const [users, setUsers] = useState([]);
-//   useEffect(() => {
-//     fetch(API_URL + endpoints.getInChargeOptionsRoute)
-//       .then(r => r.json())
-//       .then(setUsers);
-//   }, []);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     await createRoomFetcher(payload);
-//     setErrorMsg('');
-//     try {
-//       await createRoomFetcher(payload);
-//       router.push('/rooms');
-//       setSuccess(true);
-//     } catch (error) {
-//       setErrorMsg(error.message);
-//     }
-//   };
-
-//   return { users, payload, setFormData, errorMsg, success, handleSubmit };
-// }
 function useCreateRoom() {
-  // const [payload, setPayload] = useState({
-  //   name: '',
-  //   floor: '',
-  //   type: '',
-  //   stockroomType: '',
-  //   inCharge: ''
-  // });
   const [payload, setFormData] = useState({
     roomName:     '',
     roomFloor:    '',
@@ -129,7 +90,7 @@ function useCreateRoom() {
       errorMsg,
       success
     };
-  }
+}
 function useGetRoomItems(roomId) {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
@@ -193,41 +154,6 @@ function useFilteredRooms(filters) {
 
   return { rooms, loading, error };
 }
-// function useReceiveStockroom(roomId) {
-//   const router = useRouter();
-//   const [room, setRoom]       = useState(null);
-//   const [form, setForm]       = useState({});
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError]     = useState('');
-
-//   // Load room
-//   useEffect(() => {
-//     setLoading(true);
-//     getRoomByIdFetcher(roomId)
-//       .then(r => setRoom(r))
-//       .catch(err => setError(err.message))
-//       .finally(() => setLoading(false));
-//   }, [roomId]);
-
-//   // Form change
-//   function onChange(e) {
-//     const { name, value } = e.target;
-//     setForm(f => ({ ...f, [name]: value }));
-//   }
-
-//   // Submit handler
-//   async function onSubmit(e) {
-//     e.preventDefault();
-//     try {
-//       await receiveInStockroom(roomId, form);
-//       router.push(`/rooms/${roomId}/registered-items`);
-//     } catch (err) {
-//       setError(err.message);
-//     }
-//   }
-
-//   return { room, form, error, loading, onChange, onSubmit };
-// }
 function useReceiveStockroom(roomId) {
   const router = useRouter();
   const [room, setRoom]             = useState(null);
@@ -264,11 +190,24 @@ function useReceiveStockroom(roomId) {
     e.preventDefault();
     try {
       await receiveInStockroomFetcher(roomId, form);
-      router.push(`/rooms/${roomId}`);
+      router.push(`/rooms`);
     } catch (err) {
       setError(err.message);
     }
   }
 
   return { room, enumOptions, form, error, loading, onChange, onSubmit };
+}
+function useReceivedItems(roomId) {
+  const { data, error } = useSWR(
+    () => (roomId ? ['receivedItems', roomId] : null),
+    () => getReceivedItemsFetcher(roomId)
+  );
+
+  return {
+    items:     data?.items || [],
+    isLoading: !error && !data,
+    isError:   !!error,
+    error,
+  };
 }

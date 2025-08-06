@@ -8,7 +8,7 @@ module.exports = {
     getRoomItemsFetcher,
     getUserOptions,
     receiveInStockroomFetcher,
-    roomEnumOptionsFetcher
+    roomEnumOptionsFetcher,
 }
 
 async function createRoomFetcher(body) {
@@ -54,16 +54,6 @@ async function getFilteredRoomsFetcher({ type }) {
   if (!res.ok) throw new Error('Failed to fetch filtered items');
   return res.json();
 }
-// async function getRoomByIdFetcher() {
-//   const res = await fetch(`${API_URL}${endpoints.getRoomByIdRoute}`, {
-//       method: 'GET',
-//       headers: {
-//         ...headers.json,
-//         'Accept': 'application/json'
-//       }
-//     });
-//     return res.json(); 
-// }
 async function getRoomByIdFetcher(roomId) {
   const res = await fetch(
     `${API_URL}${endpoints.getRoomByIdRoute.replace(':id', roomId)}`
@@ -81,12 +71,10 @@ async function getRoomByIdFetcher(roomId) {
   return room;
 }
 async function getRoomItemsFetcher(roomId) {
-  const path = API_URL + endpoints.getRegisteredItemsRoute.replace(':roomId', roomId);
-  console.log('Fetching registered items from', path);
-  const res = await fetch(path, {
+  const res = await fetch(`${API_URL}${endpoints.getRegisteredItemsRoute}`, {
     method: 'GET',
     headers: { ...headers.json, Accept: 'application/json' },
-  });
+    });
   if (!res.ok) throw new Error('Cannot load registered items');
   return res.json();
 }
