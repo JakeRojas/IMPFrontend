@@ -7,11 +7,11 @@
 // }
 
 
-'use client';
+//'use client';
 
 import MasterLayoutUI from '@/app/layout/masterLayout.layout';
 //import ProtectedRoute from '@/components/roleGuard/protectedRoute';
 
-export default function DashboardLayout({ children }) {
+export default async function DashboardLayout({ children }) {
   return  <MasterLayoutUI> {children} </MasterLayoutUI>;
 }

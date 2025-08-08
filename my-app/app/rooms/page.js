@@ -14,11 +14,18 @@ export default function RoomsPage() {
       <RoomListUI rooms={rooms} /> 
     </MasterLayoutUI>
   );
-  // return (
-  //   <ProtectedRoute>
-  //   <MasterLayoutUI> 
-  //     <RoomListUI rooms={rooms} /> 
-  //   </MasterLayoutUI>
-  //   </ProtectedRoute>
-  // );
 }
+
+// import MasterLayoutUI from '@/app/layout/masterLayout.layout';
+// import RoomListUI from '@/app/rooms/roomList.layout';
+// import { getRoomsFetcher } from '@/services/roomService';
+
+// export default async function RoomsPage() {
+//   const rooms = await getRoomsFetcher();
+//   return (
+//     <MasterLayoutUI>
+//       <h1>Rooms</h1>
+//       <RoomListUI initialRooms={rooms} />
+//     </MasterLayoutUI>
+//   );
+// }

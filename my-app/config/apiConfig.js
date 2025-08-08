@@ -25,6 +25,7 @@ export const endpoints = {
   getInChargeOptionsRoute:  '/rooms/in-charge-options',
   getRegisteredItemsRoute:  '/rooms/:roomId/items',
   getReceivedItemsRoute:    '/rooms/:roomId/received-items',
+  getInventoryRoute:        '/rooms/:roomId/inventory',
   
   updateItemStatusRoute:    '/rooms/:roomId/scan/items/:itemQrCode/status',
 

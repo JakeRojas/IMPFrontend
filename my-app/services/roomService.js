@@ -9,6 +9,7 @@ module.exports = {
     getUserOptions,
     receiveInStockroomFetcher,
     roomEnumOptionsFetcher,
+    getInventoryFetcher
 }
 
 async function createRoomFetcher(body) {
@@ -70,11 +71,20 @@ async function getRoomByIdFetcher(roomId) {
   console.log('🛠️ [getRoomByIdFetcher] unwrapped room:', room);
   return room;
 }
+// async function getRoomByIdFetcher(id) {
+//   const url = `${process.env.NEXT_PUBLIC_API_URL}/rooms/:id`;
+//   const res = await fetch(url, { next: { revalidate: 0 } });
+//   if (!res.ok) {
+//     throw new Error(`Failed to load room (status ${res.status})`);
+//   }
+//   return res.json();
+// }
 async function getRoomItemsFetcher(roomId) {
   const res = await fetch(`${API_URL}${endpoints.getRegisteredItemsRoute}`, {
     method: 'GET',
     headers: { ...headers.json, Accept: 'application/json' },
-    });
+    }
+    );
   if (!res.ok) throw new Error('Cannot load registered items');
   return res.json();
 }
@@ -105,4 +115,10 @@ async function roomEnumOptionsFetcher(roomId) {
   if (!res.ok) throw new Error('Failed to load enum options');
   const { options } = await res.json();
   return options;
+}
+async function getInventoryFetcher(roomId) {
+  const url = `${API_URL}${endpoints.getInventoryRoute.replace(':roomId', roomId)}`;
+  const res = await fetch(url, { headers: headers.json });
+  if (!res.ok) throw new Error('Failed to load inventory');
+  return res.json();
 }

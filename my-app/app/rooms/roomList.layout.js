@@ -1,3 +1,4 @@
+// previous code
 'use client';
 
 import { API_URL, endpoints } from '@/config/apiConfig';
@@ -119,3 +120,37 @@ export default function RoomListUI(/* { rooms = [] } */) {
         </>
   );
 }
+
+
+// // app/rooms/roomList.layout.js
+// 'use client';
+
+// import { useRoomFilter } from '@/hooks/useRoom'; // or your renamed hook
+
+// export default function RoomListUI({ initialRooms }) {
+//   // use your hook to power filtering, sorting, revalidation, etc.
+//   const { rooms, filter, setFilter } = useRoomFilter(initialRooms);
+
+//   return (
+//     <div>
+//       <input
+//         type="text"
+//         placeholder="Search rooms…"
+//         value={filter}
+//         onChange={e => setFilter(e.target.value)}
+//         className="p-2 border rounded mb-4"
+//       />
+
+//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//         {rooms.map(r => (
+//           <div key={r.id} className="p-4 bg-white rounded shadow">
+//             <h3 className="text-lg font-semibold">{r.roomName}</h3>
+//             <p>Floor: {r.roomFloor}</p>
+//             <p>Stockroom: {r.stockroomType}</p>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+

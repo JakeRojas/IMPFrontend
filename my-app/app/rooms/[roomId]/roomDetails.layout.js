@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { getRoomByIdFetcher, getRoomItemsFetcher } from '@/services/roomService';
 import { getReceivedApparelFetcher } from '@/services/apparelService';
@@ -50,6 +51,11 @@ export default function RoomDetailsUI({ roomId }) {
       <h1 className="text-2xl font-bold mb-4">
         {room.roomName} {isApparel && '(Apparel Stockroom)'}{isSupply && '(Supply Stockroom)'}
       </h1>
+      <Link href={`/rooms/${room.id}/inventory`}>
+        <button className="px-3 py-1 rounded bg-blue-500 text-white">
+          View Inventory
+        </button>
+      </Link>
 
       {items.length === 0 ? (
         <p>No items received yet.</p>

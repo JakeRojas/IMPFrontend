@@ -1,7 +1,7 @@
 'use client';
 
 import { API_URL, endpoints } from '@/config/apiConfig';
-import { useState, useEffect, useRef } from'react';
+import { useState, useEffect, useMemo } from'react';
 import useSWR from'swr';
 import { useRouter } from 'next/navigation';
 import {
@@ -12,7 +12,8 @@ import {
   getRoomByIdFetcher,
   receiveInStockroomFetcher,
   roomEnumOptionsFetcher,
-  getReceivedItemsFetcher
+  getReceivedItemsFetcher,
+  getInventoryFetcher 
   } from '@/services/roomService';
 import { getUsersFetcher } from '@/services/userService'
 
@@ -25,7 +26,8 @@ module.exports = {
     useUpdateItemStatus,
     useFilteredRooms,
     useReceiveStockroom,
-    useReceivedItems
+    useReceivedItems,
+    useGetInventory 
 };
 
 function useGetRooms() {
@@ -154,6 +156,14 @@ function useFilteredRooms(filters) {
 
   return { rooms, loading, error };
 }
+// function useRoomFilter(initialData = []) {
+//   const [query, setQuery] = useState('');
+//   const filtered = useMemo(() =>
+//     initialData.filter(r => r.roomName.includes(query)), 
+//     [initialData, query]
+//   );
+//   return { rooms: filtered, query, setQuery };
+// }
 function useReceiveStockroom(roomId) {
   const router = useRouter();
   const [room, setRoom]             = useState(null);
@@ -210,4 +220,27 @@ function useReceivedItems(roomId) {
     isError:   !!error,
     error,
   };
+}
+function useGetInventory(roomId) {
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const data = await getInventoryFetcher(roomId);
+        if (!cancelled) setItems(data);
+      } catch (err) {
+        if (!cancelled) setError(err.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true };
+  }, [roomId]);
+
+  return { items, loading, error };
 }
